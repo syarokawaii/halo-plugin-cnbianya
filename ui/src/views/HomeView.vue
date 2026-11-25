@@ -36,6 +36,7 @@ import ProductFeatures from "./components/ProductFeatures.vue";
 import MainParameters from "./components/MainParameters.vue";
 import MainParametersImage from "./components/MainParametersImage.vue";
 import ImplementationStandards from "./components/ImplementationStandards.vue";
+import Faq from "./components/Faq.vue";
 import TechnicalAdvantages from "./components/TechnicalAdvantages.vue";
 import DigitalIntelligence from "@/views/components/DigitalIntelligence.vue";
 
@@ -52,6 +53,7 @@ const productFeaturesRef = ref(null)
 const mainParametersRef = ref(null)
 const mainParametersImageRef = ref(null)
 const implementationStandardsRef = ref(null)
+const faqRef = ref(null)
 const digitalIntelligenceRef = ref(null)
 const technicalAdvantagesRef = ref(null)
 
@@ -168,8 +170,8 @@ async function handleUpdatePostDetail() {
     Modal.error({ title: '执行标准 模块错误', content: '编号和名称不能为空' })
     return
   }
-  if (!implementationStandardsRef.value.dataSource.length) {
-    Modal.error({ title: '执行标准 模块错误', content: '数量必须大于0' })
+  if (faqRef.value.dataSource.some(ele => !ele.q?.trim() || !ele.a?.trim())) {
+    Modal.error({ title: '常见问题 (FAQ) 模块错误', content: '问题和回答不能为空' })
     return
   }
   
@@ -204,6 +206,7 @@ async function handleUpdatePostDetail() {
     mainParameters: JSON.stringify(mainParametersRef.value.dataSource),
     mainParametersImage: JSON.stringify(mainParametersImageRef.value.dataSource),
     implementationStandards: JSON.stringify(implementationStandardsRef.value.dataSource),
+    faq: JSON.stringify(faqRef.value.dataSource),
     // digitalIntelligence: JSON.stringify(digitalIntelligenceRef.value.data()),
     // technicalAdvantages: JSON.stringify(technicalAdvantagesRef.value.dataSource)
   }
@@ -353,6 +356,7 @@ getCategory().then((data) => {
             <MainParameters ref="mainParametersRef" class="mb-[40px]" />
             <MainParametersImage ref="mainParametersImageRef" class="mb-[40px] hidden" />
             <ImplementationStandards ref="implementationStandardsRef" class="mb-[40px]" />
+            <Faq ref="faqRef" class="mb-[40px]" />
 <!--            <DigitalIntelligence ref="digitalIntelligenceRef" class="mb-[40px]"></DigitalIntelligence>-->
 <!--            <TechnicalAdvantages ref="technicalAdvantagesRef" />-->
           </Spin>
